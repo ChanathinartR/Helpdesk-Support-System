@@ -1,4 +1,3 @@
-// src/features/tickets/components/TicketHistory.jsx
 import React, { useState } from 'react';
 import { useTickets } from '../../../store/TicketContext';
 import { filterTickets, sortTickets, formatDate } from '../utils/ticketHelpers';

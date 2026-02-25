@@ -2,29 +2,77 @@
 Pre-Interview Assignment
 
 ## Key Features
-* Create:
-   * A new ticket
-   * Timestamp
-   * Latest ticket update timestamp
-* Read:
-   * List of tickets
-   * Sort tickets by status
-   * Sort tickets by latest update
-   * Filter tickets using status
-* Update:
-   * Ticket’s information and status
-* No-Deletion Policy
 
-## Backend Architecture (Layered Pattern)
-* **Presentation Layer:** controllers
-* **Application Layer:** services
-* **Persistence Layer:** models
+* **Create:**
+    * สร้าง Ticket ใหม่พร้อมระบบบันทึกเวลาสร้าง (Timestamp)
+    * ระบบติดตามเวลาที่มีการอัปเดตล่าสุด (Latest Update Timestamp)
+* **Read:**
+    * เรียกดูรายการ Ticket ทั้งหมด
+    * **Sorting:** จัดเรียงตามสถานะ หรือ ตามเวลาที่อัปเดตล่าสุด
+    * **Filtering:** คัดกรองรายการ Ticket ตามสถานะ (Status)
+* **Update:**
+    * แก้ไขข้อมูลเนื้อหาของ Ticket และเปลี่ยนสถานะ (Status Management)
+* **Compliance:**
+    * **No-Deletion Policy:** ออกแบบระบบให้ไม่มีการลบข้อมูล เพื่อใช้ในการตรวจสอบย้อนหลัง 
+
+---
 
 ## Tech Stack
-* **Frontend:** React.js
-* **Backend:** Node.js
-* **Database:** PostgreSQL
-* **Containerization:** Docker
+
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React.js (Vite), Tailwind CSS, Axios |
+| **Backend** | Node.js (Express) |
+| **Database** | PostgreSQL |
+| **Container** | Docker, Docker Compose |
+| **Testing** | Vitest (Frontend), Jest / Supertest (Backend) |
+
+---
+
+## System Architecture (Layered Pattern)
+
+โครงสร้าง Backend ถูกออกแบบมาให้แยกความรับผิดชอบชัดเจน (Separation of Concerns):
+1.  **Presentation Layer:** `controllers/` - รับ-ส่งข้อมูลกับ Client และจัดการ HTTP Status Codes
+2.  **Application Layer:** `services/` - จัดการ Business Logic และกฎเกณฑ์ต่างๆ ของระบบ
+3.  **Persistence Layer:** `db.js` & `models/` - ติดต่อสื่อสารกับฐานข้อมูล PostgreSQL
+
+---
 
 ## Installation & Setup
-* 
+
+เพื่อให้ระบบรันได้อย่างแม่นยำและลดปัญหาเรื่อง Environment แนะนำให้รันผ่าน **Docker** ตามขั้นตอนดังนี้:
+
+### 1. Prerequisites
+* ติดตั้ง [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+* ติดตั้ง [Git](https://git-scm.com/)
+
+### 2. Getting Started
+```bash
+# 1. Clone the repository
+git clone [https://github.com/ChanathinartR/Helpdesk-Support-System.git](https://github.com/ChanathinartR/Helpdesk-Support-System.git)
+cd Helpdesk-Support-System
+
+# 2. Start the system (Build and Run Containers)
+docker-compose up --build -d
+
+# 3. Initialize Database Schema (สร้างตารางข้อมูล)
+docker exec -it helpdesksupport-db-1 psql -U postgres -d helpdesk_db -f /docker-entrypoint-initdb.d/init.sql
+```
+### 3.Accessing the Application
+เมื่อระบบรันเสร็จสิ้น คุณสามารถเข้าถึงส่วนต่างๆ ได้ดังนี้:
+* Frontend (App): http://localhost:5173
+* Backend (API): http://localhost:5000
+
+### 4.Testing
+**Backend**
+```bash
+cd backend
+npm install
+npm test
+```
+**Frontend**
+```bash
+cd frontend
+npm install
+npm test
+```

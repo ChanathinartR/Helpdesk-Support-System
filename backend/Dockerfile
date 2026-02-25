@@ -1,5 +1,5 @@
 # ใช้ Node.js version 18 หรือตามที่คุณใช้งาน
-FROM node:18-alpine
+FROM node:22-alpine
 
 # กำหนดโฟลเดอร์ทำงานใน container
 WORKDIR /app

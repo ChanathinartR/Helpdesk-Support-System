@@ -1,18 +1,40 @@
 services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password123  # แก้ให้ตรงกับใน db.js ของคุณ
+      - POSTGRES_DB=helpdesk_db        # แก้ให้ตรงกับใน db.js ของคุณ
+    volumes:
+      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   backend:
-    build: ./backend    # ชี้ไปที่โฟลเดอร์ backend เพื่อหา Dockerfile
+    build: ./backend
     ports:
       - "5000:5000"
     volumes:
       - ./backend:/app
+      - /app/node_modules
     environment:
-      - DB_HOST=db      # ตัวอย่างการตั้งค่าฐานข้อมูล
-  
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=password123
+      - DB_NAME=helpdesk_db
+    depends_on:
+      db:
+        condition: service_healthy
+
   frontend:
-    build: ./frontend   # ชี้ไปที่โฟลเดอร์ frontend เพื่อหา Dockerfile
+    build: ./frontend
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     depends_on:
       - backend

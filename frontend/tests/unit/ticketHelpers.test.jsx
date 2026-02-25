@@ -1,5 +1,3 @@
-// tests/unit/ticketHelpers.test.js
-
 import { describe, it, expect } from 'vitest';
 import { 
   formatDate, 
