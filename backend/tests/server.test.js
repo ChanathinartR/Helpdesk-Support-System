@@ -1,5 +1,3 @@
-// backend/tests/server.test.js
-
 const request = require('supertest');
 const express = require('express');
 const cors = require('cors');
@@ -11,8 +9,6 @@ const mockQuery = jest.fn();
 jest.mock('../db', () => ({
   query: mockQuery,
 }));
-
-// ─── Setup app เหมือน server.js แต่ไม่ app.listen ───────────────────────────
 
 const pool = require('../db');
 const app = express();
@@ -85,7 +81,6 @@ app.patch('/api/tickets/:id', async (req, res) => {
   }
 });
 
-// ─── Fixtures ─────────────────────────────────────────────────────────────────
 
 const mockTicket = {
   id: 1,
