@@ -22,11 +22,9 @@ Pre-Interview Assignment
 | Layer | Technology |
 | :--- | :--- |
 | **Frontend** | React.js (Vite), Tailwind CSS, Axios |
-| **Backend** | Node.js (Express) |
+| **Backend** | Node.js |
 | **Database** | PostgreSQL |
 | **Container** | Docker, Docker Compose |
-| **Testing** | Vitest (Frontend), Jest / Supertest (Backend) |
-
 ---
 
 ## System Architecture (Layered Pattern)
