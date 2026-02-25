@@ -7,25 +7,23 @@ app.use(cors());
 app.use(express.json());
 
 // ============================
-// ✅ Middleware: Validate Ticket
+// Validate Ticket
 // ============================
 const validateTicket = (req, res, next) => {
     const { title, description, contact } = req.body;
     
-    // ถ้าเป็น POST (สร้างตั๋วใหม่) ต้องเช็คให้ครบ
     if (req.method === 'POST') {
         if (!title?.trim() || !description?.trim() || !contact?.trim()) {
             return res.status(400).json({ error: "กรุณากรอกข้อมูลให้ครบทุกช่อง" });
         }
     }
-    // ถ้าเป็น PUT/PATCH ปล่อยให้ไปเช็คที่ SQL (ใช้ COALESCE)
     next();
 };
 // ============================
 // POST: สร้างตั๋วใหม่
 // ============================
 app.post('/api/tickets', validateTicket, async (req, res) => {
-    console.log('📥 POST Body:', req.body);
+    console.log('POST Body:', req.body);
 
     const { title, description, contact } = req.body;
 
@@ -38,11 +36,11 @@ app.post('/api/tickets', validateTicket, async (req, res) => {
             [title.trim(), description.trim(), contact.trim()]
         );
 
-        console.log('✅ Created:', result.rows[0]);
+        console.log('Created:', result.rows[0]);
         res.status(201).json(result.rows[0]);
 
     } catch (err) {
-        console.error('❌ Error:', err.message);
+        console.error('Error:', err.message);
         res.status(500).json({ error: "Server error", detail: err.message });
     }
 });
@@ -57,7 +55,7 @@ app.get('/api/tickets', async (req, res) => {
         );
         res.json(result.rows);
     } catch (err) {
-        console.error('❌ Error:', err.message);
+        console.error('Error:', err.message);
         res.status(500).json({ error: "Server error" });
     }
 });
@@ -87,7 +85,7 @@ app.put('/api/tickets/:id', validateTicket, async (req, res) => {
         if (result.rows.length === 0) return res.status(404).json({ error: "Ticket not found" });
         res.json(result.rows[0]);
     } catch (err) {
-        console.error('❌ Update Error:', err.message);
+        console.error('Update Error:', err.message);
         res.status(500).json({ error: "Server error", detail: err.message });
     }
 });
@@ -98,11 +96,10 @@ app.put('/api/tickets/:id', validateTicket, async (req, res) => {
 app.patch('/api/tickets/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
-    console.log('📥 PATCH Status:', { id, status });
+    console.log('PATCH Status:', { id, status });
 
-    const allowedStatus = ['pending', 'accepted', 'resolved','rejected']; // ✅ เพิ่มสถานะใหม่ถ้าต้องการ
+    const allowedStatus = ['pending', 'accepted', 'resolved','rejected'];
 
-    // ✅ ตรวจสอบว่า Status ถูกต้อง
     if (!status || !allowedStatus.includes(status)) {
         return res.status(400).json({ 
             error: `Status ต้องเป็น: ${allowedStatus.join(', ')}` 
@@ -124,14 +121,14 @@ app.patch('/api/tickets/:id', async (req, res) => {
             return res.status(404).json({ error: "Ticket not found" });
         }
 
-        console.log('✅ Status Updated:', result.rows[0]);
+        console.log('Status Updated:', result.rows[0]);
         res.json(result.rows[0]);
 
     } catch (err) {
-        console.error('❌ Error:', err.message);
+        console.error('Error:', err.message);
         res.status(500).json({ error: "Server error", detail: err.message });
     }
 });
 
 const PORT = 5000;
-app.listen(PORT, () => console.log(`🚀 Backend running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Backend running on port ${PORT}`));
