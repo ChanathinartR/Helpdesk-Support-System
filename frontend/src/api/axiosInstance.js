@@ -8,7 +8,6 @@ const axiosInstance = axios.create({
     }
 });
 
-// เราสามารถใส่ Interceptor เพื่อดักจับ Error ส่วนกลางได้ที่นี่
 axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
