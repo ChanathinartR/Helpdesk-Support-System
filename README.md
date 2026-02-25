@@ -27,13 +27,6 @@ Pre-Interview Assignment
 | **Container** | Docker, Docker Compose |
 ---
 
-## System Architecture (Layered Pattern)
-
-โครงสร้าง Backend ถูกออกแบบมาให้แยกความรับผิดชอบชัดเจน (Separation of Concerns):
-1.  **Presentation Layer:** `controllers/` - รับ-ส่งข้อมูลกับ Client และจัดการ HTTP Status Codes
-2.  **Application Layer:** `services/` - จัดการ Business Logic และกฎเกณฑ์ต่างๆ ของระบบ
-3.  **Persistence Layer:** `db.js` & `models/` - ติดต่อสื่อสารกับฐานข้อมูล PostgreSQL
-
 ---
 
 ## Installation & Setup
