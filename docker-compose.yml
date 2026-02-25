@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: ./backend    # ชี้ไปที่โฟลเดอร์ backend เพื่อหา Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_HOST=db      # ตัวอย่างการตั้งค่าฐานข้อมูล
+  
+  frontend:
+    build: ./frontend   # ชี้ไปที่โฟลเดอร์ frontend เพื่อหา Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
