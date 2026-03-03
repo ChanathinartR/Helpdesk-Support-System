@@ -18,9 +18,5 @@ export const ticketService = {
         const response = await axios.put(`${API_URL}/${id}`, updatedData);
         return response.data;
     },
-    // ลบตั๋ว
-    delete: async (id) => {
-        await axios.delete(`${API_URL}/${id}`);
-        return id;
-    }
+    
 };
