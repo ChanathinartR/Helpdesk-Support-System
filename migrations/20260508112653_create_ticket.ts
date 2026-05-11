@@ -5,6 +5,7 @@ export async function up(knex: Knex): Promise<void> {
         table.increments("id").primary();
         table.string("title").notNullable();
         table.text("description").notNullable();
+        table.string("contact").notNullable();
         table.enum("status", ["open", "in_progress", "closed"]).defaultTo("open");
         table.dateTime("created_at").defaultTo(knex.fn.now());
         table.dateTime("updated_at").notNullable().defaultTo(knex.fn.now());
